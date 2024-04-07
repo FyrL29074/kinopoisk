@@ -21,3 +21,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "kinopoisk"
 include(":app")
+include(":features:moviesList")
+include(":features:moviePage")
+include(":navigation")
+include(":network")
