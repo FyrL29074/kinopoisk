@@ -2,14 +2,15 @@ package com.fyrl29074.movieslist.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.fyrl29074.movieslist.domain.useCase.GetMoviesByPageUseCase
+import com.fyrl29074.movieslist.domain.useCase.GetMoviesByPageUseCaseImpl
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MovieListViewModel(
-    private val getMoviesByPageUseCase: GetMoviesByPageUseCase
+class MovieListViewModel @Inject constructor(
+    private val getMoviesByPageUseCase: GetMoviesByPageUseCaseImpl
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<State> = MutableStateFlow(State.Waiting)

@@ -1,12 +1,15 @@
 package com.fyrl29074.movieslist.domain.useCase
 
-import com.fyrl29074.movieslist.data.MovieRepository
+import com.fyrl29074.movieslist.data.MoviesRepository
 import com.fyrl29074.movieslist.domain.entity.Movie
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class GetMoviesByPageUseCaseImpl(
-    private val movieRepository: MovieRepository,
+@Singleton
+class GetMoviesByPageUseCaseImpl @Inject constructor(
+    private val moviesRepository: MoviesRepository,
 ): GetMoviesByPageUseCase {
     override suspend fun execute(page: Int): List<Movie> {
-        return movieRepository.getMovies(page)
+        return moviesRepository.getMovies(page)
     }
 }

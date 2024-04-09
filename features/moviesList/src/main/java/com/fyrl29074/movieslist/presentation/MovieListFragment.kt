@@ -6,16 +6,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.fyrl29074.movieslist.databinding.FragmentMovieListBinding
+import com.fyrl29074.movieslist.di.MoviesListComponent
+import com.fyrl29074.movieslist.di.MoviesListComponentProvider
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 class MovieListFragment : Fragment() {
 
     private var _binding: FragmentMovieListBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: MovieListViewModel
+    private lateinit var moviesListComponent: MoviesListComponent
+
+    @Inject
+    lateinit var viewModelFactory: MovieListViewModelFactory
+    private lateinit var viewModel: MovieListViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,27 +35,43 @@ class MovieListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-    }
 
-    private fun handleState(state: State) {
+        setUpDagger()
+        viewModel = ViewModelProvider(this, viewModelFactory)[MovieListViewModel::class.java]
+
         viewLifecycleOwner.lifecycleScope.launch {
-            when (state) {
-                is State.Error -> {
-                    binding.progressBar.isVisible = false
-                    // TODO: show error message
-                }
-                is State.Loaded -> {
-                    binding.progressBar.isVisible = false
-                    binding.test.text = state.data.toString()
-                }
-                State.Loading -> {
-                    binding.progressBar.isVisible = true
-                }
-                State.Waiting -> {
-                    viewModel.getMovies()
-                }
+            viewModel.state.collect { state ->
+                state.handle()
             }
         }
+    }
+
+    private fun State.handle() {
+        when (this) {
+            State.Waiting -> {
+                viewModel.getMovies()
+            }
+
+            State.Loading -> {
+                binding.progressBar.isVisible = true
+            }
+
+            is State.Loaded -> {
+                binding.progressBar.isVisible = false
+            }
+
+            is State.Error -> {
+                binding.progressBar.isVisible = false
+                // TODO: show error message
+            }
+        }
+    }
+
+    private fun setUpDagger() {
+        moviesListComponent = (requireActivity().application as MoviesListComponentProvider)
+            .provideMoviesListComponentProvider()
+
+        moviesListComponent.inject(this)
     }
 
     override fun onDestroy() {

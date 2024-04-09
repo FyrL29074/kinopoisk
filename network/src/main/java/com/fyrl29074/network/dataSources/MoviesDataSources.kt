@@ -2,8 +2,11 @@ package com.fyrl29074.network.dataSources
 
 import com.fyrl29074.network.api.MoviesApi
 import com.fyrl29074.network.model.MovieDto
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class MoviesDataSources(
+@Singleton
+class MoviesDataSources @Inject constructor(
     private val moviesApi: MoviesApi,
 ) {
 
@@ -12,5 +15,4 @@ class MoviesDataSources(
             page = page,
         ).movies
     }
-
 }
