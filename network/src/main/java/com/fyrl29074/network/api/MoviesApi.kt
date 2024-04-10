@@ -6,7 +6,7 @@ import retrofit2.http.Header
 import retrofit2.http.Query
 
 interface MoviesApi {
-    @GET("products")
+    @GET("movie")
     suspend fun getMoviesBy(
         @Header("X-API-KEY") apiKey: String = ServerInfo.API_KEY,
         @Query("page") page: Int,
