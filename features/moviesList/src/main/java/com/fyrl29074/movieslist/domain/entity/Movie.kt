@@ -1,12 +1,12 @@
 package com.fyrl29074.movieslist.domain.entity
 
-import com.fyrl29074.network.model.MovieRatingDto
-import com.fyrl29074.network.model.PosterDto
-
 data class Movie(
+    val id: Int,
     val name: String?,
     val description: String?,
-    val rating: MovieRatingDto?,
-    val reviewInfo: Int?,
-    val poster: PosterDto?,
+    val countries: List<Country>?,
+    val ageRating: Int?,
+    val year: Int?,
+    val rating: MovieRating?,
+    val poster: Poster?,
 )

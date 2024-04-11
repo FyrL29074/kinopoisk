@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/movies_list"
-        android:name="com.fyrl29074.movieslist.presentation.MovieListFragment"
+        android:name="com.fyrl29074.movieslist.presentation.ui.MovieListFragment"
         android:label="Movies list"
         tools:layout="@layout/fragment_movie_list" />
 

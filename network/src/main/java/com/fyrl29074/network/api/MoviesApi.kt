@@ -10,10 +10,6 @@ interface MoviesApi {
     suspend fun getMoviesBy(
         @Header("X-API-KEY") apiKey: String = ServerInfo.API_KEY,
         @Query("page") page: Int,
-        @Query("limit") limit: Int = LIMIT,
+        @Query("limit") limit: Int,
     ): Docs
-
-    companion object {
-        const val LIMIT = 10
-    }
 }

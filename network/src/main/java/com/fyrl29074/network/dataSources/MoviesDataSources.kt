@@ -10,9 +10,10 @@ class MoviesDataSources @Inject constructor(
     private val moviesApi: MoviesApi,
 ) {
 
-    suspend fun getMoviesBy(page: Int): List<MovieDto> {
+    suspend fun getMoviesBy(page: Int, limit: Int): List<MovieDto> {
         return moviesApi.getMoviesBy(
             page = page,
+            limit = limit
         ).movies
     }
 }
