@@ -12,10 +12,23 @@ class MoviesRepository @Inject constructor(
     private val movieMapper: MovieMapper,
 ) {
 
-    suspend fun getMovies(page: Int, limit: Int): List<Movie> {
+    suspend fun getMovies(
+        page: Int,
+        limit: Int,
+        fromYear: Int? = null,
+        toYear: Int? = null,
+        country: String? = null,
+        ageRating: Int? = null,
+    ): List<Movie> {
         return moviesDataSources
-            .getMoviesBy(page, limit)
-            .map { movieDto ->
+            .getMoviesBy(
+                page = page,
+                limit = limit,
+                fromYear = fromYear,
+                toYear = toYear,
+                country = country,
+                ageRating = ageRating,
+            ).map { movieDto ->
                 movieMapper.map(movieDto)
             }
     }

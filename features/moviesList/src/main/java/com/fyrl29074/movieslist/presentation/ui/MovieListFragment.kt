@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState.Loading
+import androidx.paging.PagingData
 import com.fyrl29074.movieslist.databinding.FragmentMovieListBinding
 import com.fyrl29074.movieslist.di.MoviesListComponent
 import com.fyrl29074.movieslist.di.MoviesListComponentProvider
@@ -48,23 +49,16 @@ class MovieListFragment : Fragment() {
 
         setUpDagger()
         setupUI()
-//
-//        viewModel.pagedMovies.onEach { pagingData ->
-//            adapter.submitData(pagingData)
-//        }.launchIn(viewLifecycleOwner.lifecycleScope)
 
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 adapter.loadStateFlow.collect {
-                    binding.prependProgress.isVisible = it.source.prepend is Loading
-                    binding.appendProgress.isVisible = it.source.append is Loading
+                    binding.downloadingProgressBar.isVisible = it.source.append is Loading
                 }
             }
         }
 
-        lifecycleScope.launch {
-            // We repeat on the STARTED lifecycle because an Activity may be PAUSED
-            // but still visible on the screen, for example in a multi window app
+        viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.pagedMovies.collectLatest {
                     adapter.submitData(it)
@@ -75,6 +69,21 @@ class MovieListFragment : Fragment() {
 
     private fun setupUI() {
         binding.recyclerViewMoviesList.adapter = adapter
+
+        binding.applyFilters.setOnClickListener {
+            viewLifecycleOwner.lifecycleScope.launch {
+                adapter.submitData(PagingData.empty())
+
+                viewModel.applyFilters(
+                    fromYear = binding.fromYear.text.toString().toIntOrNull(),
+                    toYear = binding.toYear.text.toString().toIntOrNull(),
+                    country = binding.countryPicker.text.toString().takeIf { country ->
+                        country.isNotBlank()
+                    },
+                    ageRating = binding.ageRatingPicker.text.toString().toIntOrNull()
+                )
+            }
+        }
     }
 
     private fun setUpDagger() {

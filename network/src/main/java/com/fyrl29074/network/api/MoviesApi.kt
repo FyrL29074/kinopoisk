@@ -11,5 +11,8 @@ interface MoviesApi {
         @Header("X-API-KEY") apiKey: String = ServerInfo.API_KEY,
         @Query("page") page: Int,
         @Query("limit") limit: Int,
+        @Query("year") years: String? = null,
+        @Query("countries.name") country: String? = null,
+        @Query("ageRating") ageRating: Int? = null,
     ): Docs
 }

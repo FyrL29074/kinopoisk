@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="year">Год</string>
+    <string name="country">Страна</string>
+    <string name="dash">-</string>
+    <string name="age_rating">Возрастной рейтинг</string>
+    <string name="apply">Применить</string>
+</resources>

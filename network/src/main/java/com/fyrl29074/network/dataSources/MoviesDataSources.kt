@@ -10,10 +10,28 @@ class MoviesDataSources @Inject constructor(
     private val moviesApi: MoviesApi,
 ) {
 
-    suspend fun getMoviesBy(page: Int, limit: Int): List<MovieDto> {
+    suspend fun getMoviesBy(
+        page: Int,
+        limit: Int,
+        fromYear: Int? = null,
+        toYear: Int? = null,
+        country: String? = null,
+        ageRating: Int? = null,
+    ): List<MovieDto> {
+        val fromY = fromYear ?: DEFAULT_FROM_YEAR
+        val toY = toYear ?: DEFAULT_TO_YEAR
+        val years = "$fromY-$toY"
         return moviesApi.getMoviesBy(
             page = page,
-            limit = limit
+            limit = limit,
+            years = years,
+            country = country,
+            ageRating = ageRating,
         ).movies
+    }
+
+    companion object {
+        private const val DEFAULT_FROM_YEAR = 1874
+        private const val DEFAULT_TO_YEAR = 2050
     }
 }

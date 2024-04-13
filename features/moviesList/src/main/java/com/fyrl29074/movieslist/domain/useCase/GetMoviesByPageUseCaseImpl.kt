@@ -9,7 +9,21 @@ import javax.inject.Singleton
 class GetMoviesByPageUseCaseImpl @Inject constructor(
     private val moviesRepository: MoviesRepository,
 ): GetMoviesByPageUseCase {
-    override suspend fun execute(page: Int, limit: Int): List<Movie> {
-        return moviesRepository.getMovies(page, limit)
+    override suspend fun execute(
+        page: Int,
+        limit: Int,
+        fromYear: Int?,
+        toYear: Int?,
+        country: String?,
+        ageRating: Int?,
+    ): List<Movie> {
+        return moviesRepository.getMovies(
+            page = page,
+            limit = limit,
+            fromYear = fromYear,
+            toYear = toYear,
+            country = country,
+            ageRating = ageRating,
+        )
     }
 }

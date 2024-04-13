@@ -40,16 +40,14 @@ dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
-    implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
-
-    implementation(libs.dagger.android)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.navigation.dynamic.features.fragment)
+    implementation(libs.material)
 
-
+    implementation(libs.dagger.android)
     kapt(libs.dagger.compiler)
 
     implementation(project(":network"))
