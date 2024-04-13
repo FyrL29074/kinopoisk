@@ -18,6 +18,8 @@ import com.fyrl29074.movieslist.di.MoviesListComponent
 import com.fyrl29074.movieslist.di.MoviesListComponentProvider
 import com.fyrl29074.movieslist.presentation.viewModel.MovieListViewModel
 import com.fyrl29074.movieslist.presentation.viewModel.MovieListViewModelFactory
+import com.fyrl29074.navigation.NavScreens
+import com.fyrl29074.navigation.Navigation
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -35,7 +37,7 @@ class MovieListFragment : Fragment() {
 
     private lateinit var moviesListComponent: MoviesListComponent
 
-    private val adapter = MovieListAdapter()
+    private val adapter = MovieListAdapter { id -> onClick(id) }
 
     private val searchFlow = MutableSharedFlow<String>(extraBufferCapacity = 1)
 
@@ -130,6 +132,14 @@ class MovieListFragment : Fragment() {
                     }
             }
         }
+    }
+
+    private fun onClick(id: Int) {
+        (requireActivity() as Navigation).navigateToMoviePage(
+            fragment = this,
+            screen = NavScreens.MoviePage,
+            id = id
+        )
     }
 
     override fun onDestroy() {

@@ -1,8 +1,10 @@
 package com.fyrl29074.network.api
 
 import com.fyrl29074.network.model.Docs
+import com.fyrl29074.network.model.MovieDto
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MoviesApi {
@@ -23,4 +25,10 @@ interface MoviesApi {
         @Query("limit") limit: Int,
         @Query("query") name: String,
     ): Docs
+
+    @GET("movie/{id}")
+    suspend fun getMovieById(
+        @Header("X-API-KEY") apiKey: String = ServerInfo.API_KEY,
+        @Path("id") id: Int,
+    ): MovieDto
 }

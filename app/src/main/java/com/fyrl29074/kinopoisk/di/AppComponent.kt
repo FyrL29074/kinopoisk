@@ -1,5 +1,7 @@
 package com.fyrl29074.kinopoisk.di
 
+import com.fyrl29074.models.di.ModelsComponent
+import com.fyrl29074.models.di.ModelsComponentProvider
 import com.fyrl29074.movieslist.di.MoviesListComponent
 import com.fyrl29074.movieslist.di.MoviesListComponentProvider
 import com.fyrl29074.network.di.NetworkModule
@@ -10,9 +12,12 @@ import javax.inject.Singleton
 @Component(
     modules = [
         MoviesListComponentProvider::class,
+        ModelsComponentProvider::class,
         NetworkModule::class,
     ]
 )
 interface AppComponent {
     fun moviesListComponent(): MoviesListComponent.Factory
+
+    fun modelsComponent(): ModelsComponent.Factory
 }

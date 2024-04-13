@@ -2,12 +2,14 @@ package com.fyrl29074.movieslist.presentation.viewModel
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.fyrl29074.movieslist.domain.useCase.GetMoviesByPageUseCaseImpl
-import com.fyrl29074.movieslist.presentation.formatter.MovieFormatter
-import com.fyrl29074.movieslist.presentation.model.MovieVO
+import com.fyrl29074.movieslist.domain.GetMoviesByFiltersUseCaseImpl
+import com.fyrl29074.movieslist.domain.GetMoviesByNameUseCase
+import com.fyrl29074.models.presentation.MovieVO
+import com.fyrl29074.models.presentation.formatter.MovieFormatter
 
 class MoviePagingSource(
-    private val getMoviesByPageUseCase: GetMoviesByPageUseCaseImpl,
+    private val getMoviesByFiltersUseCase: GetMoviesByFiltersUseCaseImpl,
+    private val getMoviesByNameUseCase: GetMoviesByNameUseCase,
     private val movieFormatter: MovieFormatter,
     private val name: String? = null,
     private val fromYear: Int? = null,
@@ -21,15 +23,22 @@ class MoviePagingSource(
         val page = params.key ?: FIRST_PAGE
 
         return runCatching {
-            getMoviesByPageUseCase.execute(
-                page = page,
-                limit = LIMIT,
-                name = name,
-                fromYear = fromYear,
-                toYear = toYear,
-                country = country,
-                ageRating = ageRating,
-            )
+            if (name != null) {
+                getMoviesByNameUseCase.execute(
+                    name = name,
+                    page = page,
+                    limit = LIMIT,
+                )
+            } else {
+                getMoviesByFiltersUseCase.execute(
+                    page = page,
+                    limit = LIMIT,
+                    fromYear = fromYear,
+                    toYear = toYear,
+                    country = country,
+                    ageRating = ageRating,
+                )
+            }
         }.fold(
             onSuccess = { movies ->
                 val moviesVO = movies.map { movie ->

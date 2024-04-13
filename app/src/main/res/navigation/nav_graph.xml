@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
@@ -10,6 +9,23 @@
         android:id="@+id/movies_list"
         android:name="com.fyrl29074.movieslist.presentation.ui.MovieListFragment"
         android:label="Movies list"
-        tools:layout="@layout/fragment_movie_list" />
+        tools:layout="@layout/fragment_movie_list">
+        <action
+            android:id="@+id/to_movie_page"
+            app:destination="@id/movie_page">
+            <argument
+                android:name="movieId"
+                app:argType="integer" />
+        </action>
+    </fragment>
 
+    <fragment
+        android:id="@+id/movie_page"
+        android:name="com.fyrl29074.moviepage.presentation.MoviePageFragment"
+        android:label="Movies list"
+        tools:layout="@layout/fragment_movie_list">
+        <argument
+            android:name="movieId"
+            app:argType="integer" />
+    </fragment>
 </navigation>

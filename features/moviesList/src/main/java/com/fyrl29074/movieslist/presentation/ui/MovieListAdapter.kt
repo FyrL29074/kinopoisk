@@ -10,9 +10,11 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.fyrl29074.movieslist.R
 import com.fyrl29074.movieslist.databinding.ItemMovieBinding
-import com.fyrl29074.movieslist.presentation.model.MovieVO
+import com.fyrl29074.models.presentation.MovieVO
 
-class MovieListAdapter :
+class MovieListAdapter(
+    private val onClick: (Int) -> Unit
+) :
     PagingDataAdapter<MovieVO, MovieListAdapter.MovieViewHolder>(MOVIES_DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
@@ -39,6 +41,10 @@ class MovieListAdapter :
                     .load(movie.posterPreviewUrl)
                     .apply(requestOptions)
                     .into(previewImage)
+
+                root.setOnClickListener {
+                    onClick(movie.id)
+                }
             }
         }
     }

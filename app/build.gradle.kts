@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("kotlin-kapt")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -50,6 +51,9 @@ dependencies {
     implementation(libs.dagger.android)
     kapt(libs.dagger.compiler)
 
+    implementation(project(":models"))
     implementation(project(":network"))
+    implementation(project(":navigation"))
     implementation(project(":features:moviesList"))
+    implementation(project(":features:moviePage"))
 }
