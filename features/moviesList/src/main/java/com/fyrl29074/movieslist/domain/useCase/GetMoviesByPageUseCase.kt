@@ -7,6 +7,7 @@ interface GetMoviesByPageUseCase {
     suspend fun execute(
         page: Int,
         limit: Int,
+        name: String? = null,
         fromYear: Int? = null,
         toYear: Int? = null,
         country: String? = null,

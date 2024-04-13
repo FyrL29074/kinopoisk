@@ -7,17 +7,42 @@
     android:layout_margin="8dp"
     tools:context=".presentation.ui.MovieListFragment">
 
+    <!-- TODO: Лучше добавить отдельный диалог, где будет выбор фильтров -->
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/search"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/input_movie_name"
+        android:lines="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/or"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/or"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/search" />
+
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/from_year"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:hint="@string/year"
         android:inputType="number"
         android:maxLength="4"
         android:textColorHint="@color/gray"
         app:layout_constraintEnd_toStartOf="@id/betweenYears"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/or" />
 
     <TextView
         android:id="@+id/betweenYears"
@@ -26,6 +51,7 @@
         android:layout_marginStart="2dp"
         android:text="@string/dash"
         android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@id/from_year"
         app:layout_constraintEnd_toStartOf="@id/to_year"
         app:layout_constraintStart_toEndOf="@id/from_year"
         app:layout_constraintTop_toTopOf="@id/from_year" />
@@ -41,7 +67,7 @@
         android:textColorHint="@color/gray"
         app:layout_constraintEnd_toStartOf="@id/country_picker"
         app:layout_constraintStart_toEndOf="@+id/betweenYears"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/from_year" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/country_picker"

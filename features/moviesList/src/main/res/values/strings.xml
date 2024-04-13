@@ -5,4 +5,6 @@
     <string name="dash">-</string>
     <string name="age_rating">Возрастной рейтинг</string>
     <string name="apply">Применить</string>
+    <string name="input_movie_name">Введите название фильма</string>
+    <string name="or">Или</string>
 </resources>

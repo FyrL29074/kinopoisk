@@ -10,6 +10,6 @@ data class MovieVO(
     val ageRating: String,
     val year: String,
     val rating: MovieRating?,
-    val posterUrl: String,
-    val posterPreviewUrl: String
+    val posterUrl: String?,
+    val posterPreviewUrl: String?
 )

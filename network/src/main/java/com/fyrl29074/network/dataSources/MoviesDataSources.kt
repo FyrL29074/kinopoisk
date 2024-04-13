@@ -13,21 +13,32 @@ class MoviesDataSources @Inject constructor(
     suspend fun getMoviesBy(
         page: Int,
         limit: Int,
+        name: String? = null,
         fromYear: Int? = null,
         toYear: Int? = null,
         country: String? = null,
         ageRating: Int? = null,
     ): List<MovieDto> {
-        val fromY = fromYear ?: DEFAULT_FROM_YEAR
-        val toY = toYear ?: DEFAULT_TO_YEAR
-        val years = "$fromY-$toY"
-        return moviesApi.getMoviesBy(
-            page = page,
-            limit = limit,
-            years = years,
-            country = country,
-            ageRating = ageRating,
-        ).movies
+        return if (name != null) {
+            moviesApi.getMoviesByName(
+                name = name,
+                page = page,
+                limit = limit
+            ).movies
+        } else {
+            val fromY = fromYear ?: DEFAULT_FROM_YEAR
+            val toY = toYear ?: DEFAULT_TO_YEAR
+            val years = "$fromY-$toY"
+
+            moviesApi.getMoviesBy(
+                page = page,
+                limit = limit,
+                years = years,
+                country = country,
+                ageRating = ageRating,
+            ).movies
+
+        }
     }
 
     companion object {

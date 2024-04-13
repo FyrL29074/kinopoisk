@@ -9,9 +9,12 @@ import javax.inject.Singleton
 class GetMoviesByPageUseCaseImpl @Inject constructor(
     private val moviesRepository: MoviesRepository,
 ): GetMoviesByPageUseCase {
+
+    // Используется поиск по name, если он null, то поиск по fromYear, toYear, country, ageRating
     override suspend fun execute(
         page: Int,
         limit: Int,
+        name: String?,
         fromYear: Int?,
         toYear: Int?,
         country: String?,
@@ -20,6 +23,7 @@ class GetMoviesByPageUseCaseImpl @Inject constructor(
         return moviesRepository.getMovies(
             page = page,
             limit = limit,
+            name = name,
             fromYear = fromYear,
             toYear = toYear,
             country = country,

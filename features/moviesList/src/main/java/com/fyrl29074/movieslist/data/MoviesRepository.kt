@@ -12,9 +12,11 @@ class MoviesRepository @Inject constructor(
     private val movieMapper: MovieMapper,
 ) {
 
+    // Используется поиск по name, если он null, то поиск по fromYear, toYear, country, ageRating
     suspend fun getMovies(
         page: Int,
         limit: Int,
+        name: String? = null,
         fromYear: Int? = null,
         toYear: Int? = null,
         country: String? = null,
@@ -24,6 +26,7 @@ class MoviesRepository @Inject constructor(
             .getMoviesBy(
                 page = page,
                 limit = limit,
+                name = name,
                 fromYear = fromYear,
                 toYear = toYear,
                 country = country,

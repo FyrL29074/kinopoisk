@@ -15,4 +15,12 @@ interface MoviesApi {
         @Query("countries.name") country: String? = null,
         @Query("ageRating") ageRating: Int? = null,
     ): Docs
+
+    @GET("movie/search")
+    suspend fun getMoviesByName(
+        @Header("X-API-KEY") apiKey: String = ServerInfo.API_KEY,
+        @Query("page") page: Int,
+        @Query("limit") limit: Int,
+        @Query("query") name: String,
+    ): Docs
 }

@@ -9,19 +9,22 @@ import com.fyrl29074.movieslist.presentation.model.MovieVO
 class MoviePagingSource(
     private val getMoviesByPageUseCase: GetMoviesByPageUseCaseImpl,
     private val movieFormatter: MovieFormatter,
-    private var fromYear: Int? = null,
-    private var toYear: Int? = null,
-    private var country: String? = null,
-    private var ageRating: Int? = null,
+    private val name: String? = null,
+    private val fromYear: Int? = null,
+    private val toYear: Int? = null,
+    private val country: String? = null,
+    private val ageRating: Int? = null,
 ) : PagingSource<Int, MovieVO>() {
     override fun getRefreshKey(state: PagingState<Int, MovieVO>): Int = FIRST_PAGE
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MovieVO> {
         val page = params.key ?: FIRST_PAGE
+
         return runCatching {
             getMoviesByPageUseCase.execute(
                 page = page,
                 limit = LIMIT,
+                name = name,
                 fromYear = fromYear,
                 toYear = toYear,
                 country = country,
@@ -32,6 +35,7 @@ class MoviePagingSource(
                 val moviesVO = movies.map { movie ->
                     movieFormatter.format(movie)
                 }
+
                 LoadResult.Page(
                     data = moviesVO,
                     prevKey = null,
