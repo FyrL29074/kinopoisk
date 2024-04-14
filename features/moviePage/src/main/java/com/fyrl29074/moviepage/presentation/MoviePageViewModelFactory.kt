@@ -13,11 +13,15 @@ class MoviePageViewModelFactory @Inject constructor(
     private val getMovieReviewsUseCase: GetMovieReviewsUseCase,
     private val movieFormatter: MovieFormatter,
 ) : ViewModelProvider.Factory {
+
+    var movieId = 0
+
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return MoviePageViewModel(
             getMovieByIdUseCase = getMovieByIdUseCase,
             getMovieReviewsUseCase = getMovieReviewsUseCase,
             movieFormatter = movieFormatter,
+            movieId = movieId
         ) as T
     }
 }

@@ -6,6 +6,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.fyrl29074.models.presentation.MovieVO
 import com.fyrl29074.models.presentation.formatter.MovieFormatter
 import com.fyrl29074.movieslist.domain.GetMoviesByFiltersUseCaseImpl
 import com.fyrl29074.movieslist.domain.GetMoviesByNameUseCase
@@ -40,7 +41,7 @@ class MovieListViewModel(
     private val pagedMoviesFlow = MutableStateFlow(defaultPager.flow.cachedIn(viewModelScope))
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val pagedMovies: Flow<PagingData<com.fyrl29074.models.presentation.MovieVO>> get() = pagedMoviesFlow.flatMapLatest { it }
+    val pagedMovies: Flow<PagingData<MovieVO>> get() = pagedMoviesFlow.flatMapLatest { it }
 
     // Используется поиск по name, если он null, то поиск по fromYear, toYear, country, ageRating
     fun applyFilters(

@@ -5,8 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.paging.LoadState
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
@@ -14,21 +18,25 @@ import com.fyrl29074.moviepage.R
 import com.fyrl29074.moviepage.databinding.FragmentMoviePageBinding
 import com.fyrl29074.moviepage.di.MoviePageComponent
 import com.fyrl29074.moviepage.di.MoviePageComponentProvider
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MoviePageFragment : Fragment() {
 
     private var _binding: FragmentMoviePageBinding? = null
-
     private val binding get() = _binding!!
 
     private lateinit var moviePageComponent: MoviePageComponent
+
+    private val adapter = ReviewsAdapter()
 
     @Inject
     lateinit var viewModelFactory: MoviePageViewModelFactory
 
     private val viewModel: MoviePageViewModel by lazy {
+        val movieId = arguments?.getInt("movieId")
+        viewModelFactory.movieId = movieId ?: 0
         viewModelFactory.create(MoviePageViewModel::class.java)
     }
 
@@ -44,6 +52,7 @@ class MoviePageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupDagger()
+        setupUI()
         setupFlows()
     }
 
@@ -54,10 +63,30 @@ class MoviePageFragment : Fragment() {
         moviePageComponent.inject(this)
     }
 
+    private fun setupUI() {
+        binding.reviews.adapter = adapter
+    }
+
     private fun setupFlows() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.state.collect { state ->
                 handleState(state)
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                adapter.loadStateFlow.collect {
+                    binding.downloadingProgressBar.isVisible = it.source.append is LoadState.Loading
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.pagedReviewsFlow.collectLatest {
+                    adapter.submitData(it)
+                }
             }
         }
     }
@@ -99,8 +128,9 @@ class MoviePageFragment : Fragment() {
             }
 
             is State.Error -> {
-//                binding.progressBar.isVisible = false
-                // Show error state
+                binding.progressBar.isVisible = false
+
+                Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
             }
         }
     }

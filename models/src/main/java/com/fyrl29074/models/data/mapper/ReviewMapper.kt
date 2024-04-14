@@ -7,9 +7,10 @@ import javax.inject.Inject
 class ReviewMapper @Inject constructor() {
     fun map(dto: ReviewDto): Review {
         return Review(
+            id = dto.id,
             title = dto.title,
             type = dto.type,
-            review = dto.review,
+            text = dto.text,
             author = dto.author,
         )
     }
