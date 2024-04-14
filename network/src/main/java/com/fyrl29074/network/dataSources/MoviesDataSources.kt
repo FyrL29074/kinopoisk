@@ -2,6 +2,7 @@ package com.fyrl29074.network.dataSources
 
 import com.fyrl29074.network.api.MoviesApi
 import com.fyrl29074.network.model.MovieDto
+import com.fyrl29074.network.model.ReviewDto
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -47,6 +48,18 @@ class MoviesDataSources @Inject constructor(
         return moviesApi.getMovieById(
             id = id
         )
+    }
+
+    suspend fun getMovieReviews(
+        movieId: Int,
+        page: Int,
+        limit: Int,
+    ): List<ReviewDto> {
+        return moviesApi.getMovieReviews(
+            page = page,
+            limit = limit,
+            movieId = movieId,
+        ).reviews
     }
 
     companion object {

@@ -7,5 +7,11 @@ data class MovieVO(
     val countries: String,
     val ageRating: String,
     val year: String,
-    val posterPreviewUrl: String?
+    val posterUrl: String,
+    val posterPreviewUrl: String,
+    val kpRating: String,
+    val imdbRating: String,
+    val filmCriticsRating: String,
+    val russianFilmCriticsRating: String,
+    val awaitRating: String,
 )

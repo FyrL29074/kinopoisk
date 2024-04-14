@@ -7,7 +7,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class MoviesRepository @Inject constructor(
+class MoviesListRepository @Inject constructor(
     private val moviesDataSources: MoviesDataSources,
     private val movieMapper: MovieMapper,
 ) {

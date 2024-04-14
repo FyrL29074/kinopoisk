@@ -2,7 +2,7 @@ package com.fyrl29074.network.model
 
 import com.google.gson.annotations.SerializedName
 
-data class Docs(
+data class DocsReview(
     @SerializedName("docs")
-    val movies: List<MovieDto>,
+    val reviews: List<ReviewDto>,
 )

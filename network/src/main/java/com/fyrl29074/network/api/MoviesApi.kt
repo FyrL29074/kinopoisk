@@ -1,6 +1,7 @@
 package com.fyrl29074.network.api
 
-import com.fyrl29074.network.model.Docs
+import com.fyrl29074.network.model.DocsMovies
+import com.fyrl29074.network.model.DocsReview
 import com.fyrl29074.network.model.MovieDto
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -16,7 +17,7 @@ interface MoviesApi {
         @Query("year") years: String? = null,
         @Query("countries.name") country: String? = null,
         @Query("ageRating") ageRating: Int? = null,
-    ): Docs
+    ): DocsMovies
 
     @GET("movie/search")
     suspend fun getMoviesByName(
@@ -24,11 +25,19 @@ interface MoviesApi {
         @Query("page") page: Int,
         @Query("limit") limit: Int,
         @Query("query") name: String,
-    ): Docs
+    ): DocsMovies
 
     @GET("movie/{id}")
     suspend fun getMovieById(
         @Header("X-API-KEY") apiKey: String = ServerInfo.API_KEY,
         @Path("id") id: Int,
     ): MovieDto
+
+    @GET("review")
+    suspend fun getMovieReviews(
+        @Header("X-API-KEY") apiKey: String = ServerInfo.API_KEY,
+        @Query("page") page: Int,
+        @Query("limit") limit: Int,
+        @Query("movieId") movieId: Int,
+    ): DocsReview
 }

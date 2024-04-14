@@ -9,6 +9,7 @@ import javax.inject.Singleton
 @Singleton
 class MovieMapper @Inject constructor(
     private val posterMapper: PosterMapper,
+    private val ratingMapper: RatingMapper,
 ) {
     fun map(dto: MovieDto): Movie {
         return Movie(
@@ -21,6 +22,7 @@ class MovieMapper @Inject constructor(
             ageRating = dto.ageRating,
             year = dto.year,
             poster = dto.poster?.let { posterMapper.map(it) },
+            rating = dto.rating?.let { ratingMapper.map(it) }
         )
     }
 }

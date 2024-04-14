@@ -8,4 +8,5 @@ data class Movie(
     val ageRating: Int?,
     val year: Int?,
     val poster: Poster?,
+    val rating: Rating?,
 )

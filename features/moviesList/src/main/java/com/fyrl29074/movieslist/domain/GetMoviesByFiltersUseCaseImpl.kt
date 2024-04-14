@@ -1,13 +1,13 @@
 package com.fyrl29074.movieslist.domain
 
 import com.fyrl29074.models.domain.Movie
-import com.fyrl29074.movieslist.data.MoviesRepository
+import com.fyrl29074.movieslist.data.MoviesListRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class GetMoviesByFiltersUseCaseImpl @Inject constructor(
-    private val moviesRepository: MoviesRepository,
+    private val moviesListRepository: MoviesListRepository,
 ) {
 
     // Используется поиск по name, если он null, то поиск по fromYear, toYear, country, ageRating
@@ -19,7 +19,7 @@ class GetMoviesByFiltersUseCaseImpl @Inject constructor(
         country: String?,
         ageRating: Int?,
     ): List<Movie> {
-        return moviesRepository.getMoviesByFilters(
+        return moviesListRepository.getMoviesByFilters(
             page = page,
             limit = limit,
             fromYear = fromYear,

@@ -2,7 +2,7 @@ package com.fyrl29074.network.model
 
 import com.google.gson.annotations.SerializedName
 
-data class MovieRatingDto(
+data class RatingDto(
     @SerializedName("kp")
     val kp: Double?,
     @SerializedName("imdb")

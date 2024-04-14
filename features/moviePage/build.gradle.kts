@@ -31,11 +31,15 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
-
     implementation(project(":network"))
+    implementation(project(":models"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -45,5 +49,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.dagger.android)
+    implementation(libs.paging)
+    implementation(libs.glide)
+
     kapt(libs.dagger.compiler)
 }
