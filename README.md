@@ -1,5 +1,5 @@
 # kinopoisk
-Для запуска необходимо добавить в local.properites следующую строку
+Для запуска необходимо запустить проект в Android Studio и добавить в local.properites следующую строку
 API_KEY="token"
 Вместо token подставить свой токен.
 
